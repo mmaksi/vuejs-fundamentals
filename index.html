@@ -6,9 +6,34 @@
   </head>
   <body>
     <!-- v-cloak stays there until vue app loads -->
-    <div id="app" v-cloak>
-      <h1>{{ message }}</h1>
-      <h2>My name is {{ fullName() }}</h2>
+    <div id="app">
+      <h1 v-cloak>{{ message }}</h1>
+      <h2 v-cloak>My name is {{ fullName }}</h2>
+      <p v-cloak>{{ age }}</p>
+      <!-- v-model allows two way data binding for JS expressions -->
+      <label>First name</label>
+      <input type="text" v-model.lazy.trim="firstName">
+      <!-- Handle kyboard strokes -->
+      <label>Middle name</label>
+      <input type="text" :value="middleName" @keyup="updateMiddleName">
+
+      <label>Last name</label>
+      <!-- Pass data with the event -->
+      <!-- Event modifiers -->
+      <input type="text" :value="lastName" @input.prevent="updateLastName('name updated', $event)" >
+      <!-- Allows attributes to have dynamic values. v-bind:href or :href -->
+      <a v-bind:href="url">Google</a>
+      <!-- Allows to render html instead of raw text url.
+      This can cause secuirty issues like XSS -->
+      <p v-html="raw_html"></p>
+
+      <label>Age</label>
+      <input type="number" :value.number="age" >
+
+      <!-- Listening to HTML events -->
+      <button @click="increment">Increment</button>
+      <button @click="age--">Decrement</button>
+    </div>
     </div>
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <script src="app.js"></script>
